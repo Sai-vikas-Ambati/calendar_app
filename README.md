@@ -142,5 +142,3 @@ calendar_assistant/
 ---
 
 ## 📜 License
-
-This project is for demonstration/interview purposes.

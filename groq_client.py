@@ -12,6 +12,7 @@ from datetime import datetime
 import pytz
 from dotenv import load_dotenv
 from groq import Groq
+import streamlit as st
 
 from tools import (
     create_event,
@@ -25,8 +26,17 @@ load_dotenv()
 
 IST = pytz.timezone("Asia/Kolkata")
 
+
+def _get_secret(key: str) -> str:
+    """Read a secret from st.secrets (Streamlit Cloud) or .env (local)."""
+    try:
+        return st.secrets[key]
+    except Exception:
+        return os.getenv(key, "")
+
+
 # ── Configure Groq Client ───────────────────────────────────────────────────
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+client = Groq(api_key=_get_secret("GROQ_API_KEY"))
 
 MODEL_NAME = "llama-3.3-70b-versatile"
 

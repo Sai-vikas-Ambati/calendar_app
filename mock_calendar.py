@@ -9,8 +9,17 @@ if MongoDB is unavailable.
 import os
 import copy
 from dotenv import load_dotenv
+import streamlit as st
 
 load_dotenv()
+
+
+def _get_secret(key: str) -> str:
+    """Read a secret from st.secrets (Streamlit Cloud) or .env (local)."""
+    try:
+        return st.secrets[key]
+    except Exception:
+        return os.getenv(key, "")
 
 # Default mock calendar events — seeded on first run
 DEFAULT_CALENDAR = {
@@ -48,7 +57,7 @@ def _get_db():
     if _db is None:
         try:
             from pymongo import MongoClient
-            mongo_uri = os.getenv("MONGODB_URI")
+            mongo_uri = _get_secret("MONGODB_URI")
             if mongo_uri:
                 client = MongoClient(mongo_uri, serverSelectionTimeoutMS=5000)
                 # Test connection

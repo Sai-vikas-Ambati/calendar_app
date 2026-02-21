@@ -149,8 +149,6 @@ with st.sidebar:
     for ex in examples:
         st.markdown(f"- `{ex}`")
 
-    st.markdown("---")
-    st.caption("ℹ️ Calendar data is stored in-memory and resets on restart.")
 
 # ── Main Chat Area ──────────────────────────────────────────────────────────
 st.markdown(

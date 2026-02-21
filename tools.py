@@ -8,6 +8,7 @@ returns a plain-text string (never raises exceptions).
 
 from datetime import datetime, timedelta
 import pytz
+from mock_calendar import sync_to_db
 
 IST = pytz.timezone("Asia/Kolkata")
 
@@ -39,6 +40,9 @@ def create_event(
             "end_time": end_dt.strftime("%H:%M"),
             "description": description,
         }
+
+        # Persist to MongoDB
+        sync_to_db(calendar)
 
         start_fmt = start_dt.strftime("%I:%M %p")
         end_fmt = end_dt.strftime("%I:%M %p")
@@ -163,6 +167,9 @@ def update_event(
         new_start_fmt = datetime.strptime(evt["start_time"], "%H:%M").strftime("%I:%M %p")
         new_end_fmt = datetime.strptime(evt["end_time"], "%H:%M").strftime("%I:%M %p")
 
+        # Persist to MongoDB
+        sync_to_db(calendar)
+
         return (
             f"Event '{evt['title']}' ({event_id}) updated!\n"
             f"• Old: {old_date} {old_start_fmt} – {old_end_fmt}\n"
@@ -186,6 +193,10 @@ def delete_event(calendar: dict, event_id: str) -> str:
             )
 
         evt = calendar.pop(event_id)
+
+        # Persist to MongoDB
+        sync_to_db(calendar)
+
         start_fmt = datetime.strptime(evt["start_time"], "%H:%M").strftime("%I:%M %p")
         end_fmt = datetime.strptime(evt["end_time"], "%H:%M").strftime("%I:%M %p")
         return (

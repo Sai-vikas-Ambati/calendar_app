@@ -1,8 +1,8 @@
 # 📅 CalBot — Google Calendar Scheduling Assistant
 
-A conversational AI assistant that manages a mock calendar through natural chat. Built with **Groq API** (Llama 3.3 70B with native tool calling), **Streamlit**, and an **in-memory mock calendar**.
+A conversational AI assistant that manages a calendar through natural chat. Built with **Groq API** (Llama 3.3 70B with native tool calling), **Streamlit**, and **MongoDB Atlas** for persistent storage.
 
-> **Only 1 API key needed** — `GROQ_API_KEY` from [Groq Console](https://console.groq.com). No OAuth, no Google Cloud setup required.
+> **Only 2 keys needed** — `GROQ_API_KEY` from [Groq Console](https://console.groq.com) and a `MONGODB_URI` connection string. No OAuth, no Google Cloud setup required.
 
 ---
 
@@ -13,7 +13,8 @@ A conversational AI assistant that manages a mock calendar through natural chat.
 - **Multi-Step Operations** — e.g., "Move my standup to 11am" triggers list → find ID → update
 - **Availability Checking** — detects time-slot overlaps with existing events
 - **Relative Date Understanding** — handles "today", "tomorrow", "next Monday", etc.
-- **Pre-Populated Demo Data** — 3 sample events so the app looks great immediately
+- **Pre-Populated Demo Data** — 3 sample events seeded on first run
+- **MongoDB Persistence** — calendar data survives app restarts
 
 ---
 
@@ -21,6 +22,7 @@ A conversational AI assistant that manages a mock calendar through natural chat.
 
 - **Python 3.9+**
 - **Groq API Key** — free from [Groq Console](https://console.groq.com)
+- **MongoDB Atlas** — free tier at [mongodb.com](https://www.mongodb.com/atlas)
 
 ---
 
@@ -44,6 +46,7 @@ Create a `.env` file in the project root:
 
 ```
 GROQ_API_KEY=your_groq_api_key_here
+MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/
 ```
 
 ### 4. Run the app
@@ -134,7 +137,8 @@ calendar_assistant/
 
 ## ⚠️ Notes
 
-- The mock calendar is **in-memory only** — it resets when the app restarts (by design)
+- Calendar data is **persisted in MongoDB Atlas** — survives app restarts
+- If MongoDB is unavailable, falls back to in-memory (like before)
 - Default timezone is **IST (Asia/Kolkata)**
 - Uses **Groq API** with **Llama 3.3 70B Versatile** for fast responses with tool calling
 - All 5 tool functions return strings and never raise exceptions — the app will never crash

@@ -59,7 +59,10 @@ MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/
 streamlit run app.py
 ```
 
-The app opens at `http://localhost:8501`.
+The app will be available locally at `http://localhost:8501`.
+
+> [!TIP]
+> For the live production version, visit: **[https://calendarapp-5ajkmlfy4sokfrcr5dtrmf.streamlit.app/](https://calendarapp-5ajkmlfy4sokfrcr5dtrmf.streamlit.app/)**
 
 ---
 

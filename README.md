@@ -4,6 +4,10 @@ A conversational AI assistant that manages a calendar through natural chat. Buil
 
 > **Only 2 keys needed** — `GROQ_API_KEY` from [Groq Console](https://console.groq.com) and a `MONGODB_URI` connection string. No OAuth, no Google Cloud setup required.
 
+### 🌐 [Live Demo →](https://calendarapp-5ajkmlfy4sokfrcr5dtrmf.streamlit.app/)
+
+![CalBot Demo](screenshots/calbot_demo.png)
+
 ---
 
 ## ✨ Features

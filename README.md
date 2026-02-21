@@ -104,6 +104,33 @@ Bot:  Done! Project Review has been cancelled.
 
 ---
 
+## 🏗️ Architecture
+```mermaid
+flowchart TD
+    A([👤 User]) -->|Types message| B[🖥️ Streamlit UI\napp.py]
+    
+    B -->|Message + Chat History\n+ Tool Definitions| C[🤖 Groq LLM\nLlama 3.3 70B]
+    
+    C -->|Direct text response| B
+    C -->|Tool call request| D[⚙️ Tool Router\ngroq_client.py]
+    
+    D --> E{Which Tool?}
+    
+    E -->|create_event| T1[📝 Create Event]
+    E -->|list_events| T2[📋 List Events]
+    E -->|check_availability| T3[🔍 Check Availability]
+    E -->|update_event| T4[✏️ Update Event]
+    E -->|delete_event| T5[🗑️ Delete Event]
+    
+    T1 & T2 & T3 & T4 & T5 -->|Read / Write| F[(🗄️ MongoDB Atlas)]
+    
+    F -->|Result| D
+    D -->|Tool result| C
+    B -->|Display response| A
+```
+
+---
+
 ## 📁 Project Structure
 
 ```
